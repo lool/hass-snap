@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: Apache-2.0
+name: hass-lool
+base: core18
+version: 0.103.4
+summary: Open-source home automation platform
+description: |
+  Home Assistant is a home automation platform. It is able to track and control
+  all devices at home and offer a platform for automating control.
+grade: stable
+confinement: strict
+
+parts:
+  hass: 
+    plugin: python
+    python-packages:
+      - homeassistant==0.103.4
+      # seems this is not correctly pulled and causes an error on startup
+      - aiohttp_cors
+
+apps:
+  hass:
+    command: bin/hass --skip-pip --open-ui
+    plugs: [network-bind]
+    daemon: simple
